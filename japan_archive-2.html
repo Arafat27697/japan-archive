@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan Archive</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:#d71920;color:white;padding:22px 16px;text-align:center}
+header h1{margin:0;font-size:30px} header p{margin:7px 0 0}
+.container{max-width:950px;margin:auto;padding:22px 16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:white;border-radius:16px;padding:22px;box-shadow:0 4px 15px #00000012}
+.card h2{margin-top:0}.btn{display:block;width:100%;padding:13px;border:0;border-radius:10px;background:#172033;color:white;font-size:16px;margin-top:12px;cursor:pointer}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-top:18px}
+.day{padding:12px 6px;border:0;border-radius:10px;background:white;box-shadow:0 2px 8px #00000010;cursor:pointer;font-weight:bold}
+.day:hover{background:#e9eefc}.hidden{display:none}
+.lesson{background:white;border-radius:16px;padding:22px;margin-top:18px}
+.back{background:#666}.tag{display:inline-block;padding:6px 10px;border-radius:20px;background:#eef2ff;margin:4px}
+footer{text-align:center;padding:25px;color:#667}
+</style>
+</head>
+<body>
+<header>
+  <h1>🇯🇵 Japan Archive</h1>
+  <p>Japanese Language Learning Platform</p>
+</header>
+
+<div class="container">
+  <section id="home">
+    <h2>কোর্স নির্বাচন করুন</h2>
+    <div class="cards">
+      <div class="card">
+        <h2>📘 Japanese N5</h2>
+        <p>৯০ দিনের ধাপে ধাপে N5 কোর্স</p>
+        <button class="btn" onclick="openCourse('N5')">N5 Course</button>
+      </div>
+      <div class="card">
+        <h2>📗 Japanese N4</h2>
+        <p>৯০ দিনের N4 কোর্স</p>
+        <button class="btn" onclick="openCourse('N4')">N4 Course</button>
+      </div>
+      <div class="card">
+        <h2>🎯 JFT</h2>
+        <p>JFT প্রস্তুতির কোর্স</p>
+        <button class="btn" onclick="openCourse('JFT')">JFT Course</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="course" class="hidden">
+    <button class="btn back" onclick="goHome()">← Home</button>
+    <h2 id="courseTitle"></h2>
+    <p>আজকের Day নির্বাচন করুন:</p>
+    <div id="days" class="days"></div>
+  </section>
+
+  <section id="lesson" class="hidden">
+    <button class="btn back" onclick="backToDays()">← সব Day</button>
+    <div class="lesson">
+      <h2 id="lessonTitle"></h2>
+      <p><span class="tag">📖 Vocabulary</span><span class="tag">✍️ Grammar</span><span class="tag">🔤 Kana/Kanji</span></p>
+      <h3>আজকের পড়া</h3>
+      <p id="lessonText">এখানে এই দিনের পাঠ যোগ করবে।</p>
+      <h3>📝 Practice</h3>
+      <p>আজকের পড়া শেষ করে নিজের খাতায় অনুশীলন করো।</p>
+      <button class="btn" onclick="alert('Day completed! 🎉')">✅ Day Complete</button>
+    </div>
+  </section>
+</div>
+<footer>© 2026 Japan Archive</footer>
+
+<script>
+let currentCourse="";
+function openCourse(course){
+  currentCourse=course;
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("course").classList.remove("hidden");
+  document.getElementById("lesson").classList.add("hidden");
+  document.getElementById("courseTitle").textContent=course+" Course";
+  const days=document.getElementById("days"); days.innerHTML="";
+  const total=course==="JFT"?30:90;
+  for(let i=1;i<=total;i++){
+    const b=document.createElement("button");
+    b.className="day"; b.textContent="Day "+String(i).padStart(2,"0");
+    b.onclick=()=>openDay(i); days.appendChild(b);
+  }
+}
+function openDay(day){
+  document.getElementById("course").classList.add("hidden");
+  document.getElementById("lesson").classList.remove("hidden");
+  document.getElementById("lessonTitle").textContent=currentCourse+" — Day "+String(day).padStart(2,"0");
+  document.getElementById("lessonText").textContent=
+    "এই জায়গায় Day "+day+"-এর Vocabulary, Grammar, Kana/Kanji, Listening এবং Practice-এর বিস্তারিত পাঠ লিখবে।";
+}
+function backToDays(){
+  document.getElementById("lesson").classList.add("hidden");
+  document.getElementById("course").classList.remove("hidden");
+}
+function goHome(){
+  document.getElementById("course").classList.add("hidden");
+  document.getElementById("lesson").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+}
+</script>
+</body>
+</html>
